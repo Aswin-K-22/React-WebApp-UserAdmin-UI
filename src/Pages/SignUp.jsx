@@ -1,54 +1,51 @@
-import { useState } from 'react';
-import axios from '../axios';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from '../axios';
+
+import Footer from "../Components/Footer/Footer"
+import Navbar from "../Components/Navbar/Navbar"
+import SignUpForm from "../Components/SignUpForm/SignUpForm"
 
 const SignUp = () => {
-    const [formData, setFormData] = useState({ name: '', email: '', password: '' });
+    const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
+    useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                const response = await axios.get('/user/is-authenticated', { withCredentials: true });
+                if (response.data.isAuthenticated) {
+                    navigate('/'); // Redirect if already authenticated
+                } else {
+                    setIsLoading(false); // Allow login form to render
+                }
+            } catch (error) {
+                if (error.response?.status === 401) {
+                    // Handle unauthorized access silently
+                    console.warn('User not authenticated');
+                } else {
+                    console.error('Error fetching user:1', error.response?.data?.message || error.message);
+                }
+               
+                
+                setIsLoading(false); // 
+                setIsLoading(false); // Allow login form to render if not authenticated
+            }
+        };
+        checkAuth();
+    }, [navigate]);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!formData.name || !formData.email || !formData.password) {
-            alert('All fields are required');
-            return;
-        }
-        try {
-            const response = await axios.post('/user/signup', formData);
-            alert(response.data.message);
-            navigate('/user/login')
-        } catch (err) {
-            alert(err.response?.data?.message || 'An unexpected error occurred');
-        }
-    };
+    if (isLoading) {
+        return <div>Loading...</div>; // Show a loader while checking auth
+    }
 
-    return (
-        <form onSubmit={handleSubmit}>
-            <input
-                name="name"
-                placeholder="Name"
-                value={formData.name}
-                onChange={handleChange}
-            />
-            <input
-                name="email"
-                placeholder="Email"
-                value={formData.email}
-                onChange={handleChange}
-            />
-            <input
-                name="password"
-                placeholder="Password"
-                type="password"
-                value={formData.password}
-                onChange={handleChange}
-            />
-            <button type="submit">Register</button>
-        </form>
-    );
-};
+  return (
+    <div>
+      <Navbar></Navbar>
+      <SignUpForm></SignUpForm>
+      <Footer></Footer>  
+    </div>
+  )
+}
 
-export default SignUp;
+export default SignUp

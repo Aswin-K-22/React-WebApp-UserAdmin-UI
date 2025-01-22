@@ -2,4 +2,16 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
+    height: 100%;
+    margin: 0;
   }
+
+
+
+.container {
+  min-height: 100vh; /* Minimum height of 100% of the viewport */
+  display: flex;     /* Optional: Flexbox for centering content */
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  align-items: center;     /* Center content horizontally */
+}

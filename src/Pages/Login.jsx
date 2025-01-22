@@ -1,39 +1,50 @@
-import { useState } from 'react';
-import axios from '../axios';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from '../axios';
+
+import Footer from "../Components/Footer/Footer"
+import LoginForm from "../Components/LoginForm/LoginForm"
+import Navbar from "../Components/Navbar/Navbar"
+
 
 const Login = () => {
-    const [formData, setFormData] = useState({ email: '', password: '' });
+    const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
+    useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                const response = await axios.get('/user/is-authenticated', { withCredentials: true });
+                if (response.data.isAuthenticated) {
+                    navigate('/'); // Redirect if already authenticated
+                } else {
+                    setIsLoading(false); // Allow login form to render
+                }
+            } catch (error) {
+                if (error.response?.status === 401) {
+                    // Handle unauthorized access silently
+                    console.warn('User not authenticated');
+                } else {
+                    console.error('Error fetching user:1', error.response?.data?.message || error.message);
+                }
+               
+                
+                setIsLoading(false); // Allow login form to render if not authenticated
+            }
+        };
+        checkAuth();
+    }, [navigate]);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!formData.email || !formData.password) {
-            alert('Please fill out all fields');
-            return;
-        }
+    if (isLoading) {
+        return <div>Loading...</div>; // Show a loader while checking auth
+    }
+  return (
+    <div>
+        <Navbar></Navbar>
+      <LoginForm></LoginForm>
+      <Footer></Footer>
+    </div>
+  )
+}
 
-        try {
-            const response = await axios.post('/user/login', formData);
-            alert('Login successful');
-            localStorage.setItem('token', response.data.token);
-            navigate('/user/home'); // Ensure the path starts with "/"
-        } catch (err) {
-            alert(err.response?.data?.message || 'Something went wrong');
-        }
-    };
-
-    return (
-        <form onSubmit={handleSubmit}>
-            <input name="email" placeholder="Email" onChange={handleChange} />
-            <input name="password" placeholder="Password" type="password" onChange={handleChange} />
-            <button type="submit">Login</button>
-        </form>
-    );
-};
-
-export default Login;
+export default Login

@@ -1,14 +1,30 @@
-.home-content {
+
+
+  .home-content {
     padding: 2rem;
     text-align: center;
+    min-height:72vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+    /* background-image: url('/path-to-your-image.jpg'); */
+    background-size: cover;
+    background-position: center;
+  }
+  @media (max-width: 768px) {
+    .welcome-section h1 {
+      font-size: 1.5rem;
+    }
+  
+    .welcome-section p {
+      font-size: 1rem;
+    }
+  }
+
+  
+  .home-content {
+    transition: all 0.3s ease-in-out;
   }
   
-  .welcome-section h1 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-  }
-  
-  .welcome-section p {
-    font-size: 1.2rem;
-    color: #555;
-  }
