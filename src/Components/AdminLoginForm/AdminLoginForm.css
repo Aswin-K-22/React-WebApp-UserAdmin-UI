@@ -1,0 +1,114 @@
+/* Container for the admin login page */
+.admin-login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f9f9f9; /* Light background color */
+    margin: 0;
+}
+
+/* Styling for the login form */
+.admin-login-form {
+    width: 100%;
+    max-width: 400px; /* Limit the maximum width */
+    background-color: #ffffff; /* White background for the form */
+    padding: 20px;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Spacing between inputs */
+}
+
+/* Input fields */
+.admin-login-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dcdcdc; /* Light gray border */
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    margin: 10px -10px;
+    transition: border-color 0.3s ease; /* Smooth transition */
+}
+
+/* Input focus effect */
+.admin-login-form input:focus {
+    border-color: #4a90e2; /* Blue border on focus */
+    box-shadow: 0 0 3px rgba(74, 144, 226, 0.5); /* Glow effect */
+}
+
+/* Password container (to handle show/hide button) */
+.password-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+/* Password input field */
+.password-container input {
+    flex: 1; /* Take the full width of the container */
+}
+
+/* Show/Hide password button */
+.show-password-button {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #4a90e2; /* Blue color for the button */
+    font-size: 14px;
+    cursor: pointer;
+    padding: 5px;
+    transition: color 0.3s ease;
+}
+
+/* Hover effect for the show/hide button */
+.show-password-button:hover {
+    color: #2a75c0; /* Darker blue on hover */
+}
+
+/* Submit button */
+.admin-login-form button[type="submit"] {
+    background-color: #4a90e2; /* Blue background */
+    color: #ffffff; /* White text */
+    font-size: 16px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Submit button hover and active states */
+.admin-login-form button[type="submit"]:hover {
+    background-color: #2a75c0; /* Darker blue on hover */
+}
+
+.admin-login-form button[type="submit"]:active {
+    transform: scale(0.98); /* Slight shrink effect on click */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .admin-login-form {
+        max-width: 90%; /* Make the form fit smaller screens */
+        padding: 15px;
+    }
+
+    .admin-login-page {
+        padding: 10px; /* Add padding to prevent edge cutting */
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-login-form input {
+        font-size: 14px; /* Smaller font size for inputs */
+    }
+
+    .admin-login-form button {
+        font-size: 14px; /* Smaller font size for button */
+        padding: 8px;
+    }
+}

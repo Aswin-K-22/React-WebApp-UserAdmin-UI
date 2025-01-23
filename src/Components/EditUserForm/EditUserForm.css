@@ -1,0 +1,111 @@
+/* Overall container */
+.edit-user-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+    padding: 20px;
+}
+
+/* Form wrapper */
+.edit-user-form-wrapper {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+    max-width: 500px;
+}
+
+/* Form title */
+.edit-user-form-wrapper h2 {
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    color: #333;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Form group */
+.edit-user-form-group {
+    margin-bottom: 20px;
+}
+
+/* Labels */
+.edit-user-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #555;
+}
+
+/* Inputs */
+.edit-user-form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin: 0px , -10px;
+}
+
+/* Error messages */
+.edit-user-form-error {
+    color: #ff4d4d;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+/* Form actions */
+.edit-user-form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* Buttons */
+.edit-user-form-submit {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    flex: 1;
+    transition: background-color 0.3s;
+}
+
+.edit-user-form-submit:hover {
+    background-color: #45a049;
+}
+
+.edit-user-form-cancel {
+    background-color: #f44336;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    flex: 1;
+    transition: background-color 0.3s;
+}
+
+.edit-user-form-cancel:hover {
+    background-color: #e53935;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .edit-user-form-wrapper {
+        padding: 20px;
+    }
+
+    .edit-user-form-submit,
+    .edit-user-form-cancel {
+        font-size: 0.9rem;
+    }
+}
