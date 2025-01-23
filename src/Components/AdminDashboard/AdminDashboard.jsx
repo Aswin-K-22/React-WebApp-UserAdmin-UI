@@ -2,6 +2,8 @@ import './AdminDashboard.css'; // Import your CSS for styling
 import { useState, useEffect } from 'react';
 import axios from '../../axios'; // Ensure this is set up for API requests
 import { useNavigate } from 'react-router-dom';
+import { toast} from 'react-toastify';
+
 
 const AdminDashboard = () => {
 
@@ -40,7 +42,7 @@ const AdminDashboard = () => {
     const handleAddUser = async () => {
         // Frontend Validation
         if (!newUser.name || !newUser.email || !newUser.password) {
-            alert('All fields (Name, Email, and Password) are required!');
+            toast.error('All fields (Name, Email, and Password) are required!');
             return;
         }
     
@@ -55,21 +57,66 @@ const AdminDashboard = () => {
         }
     };
     
-    const handleDeleteUser = async (id) => {
-        const confirmDelete = window.confirm('Are you sure you want to delete this user?');
-        if (confirmDelete) {
-            try {
-                 await axios.delete(`/admin/user/${id}`); // Replace with your API endpoint 
-                    setUsers(users.filter((user) => user._id !== id));
 
-                
-                alert('User deleted successfully'); // Show success message
-            } catch (error) {
-                console.error('Error deleting user:', error.response?.data?.message || error.message);
-                alert(`Error deleting user: ${error.response?.data?.message || error.message}`); // Show error message to user
-            }
-        }
+    const handleDeleteUser = async (id) => {
+        toast.info('Are you sure you want to delete this user?', {
+            position: "top-center",
+            autoClose: false, // Keep the toast open until user interacts
+            closeOnClick: false, // Prevent accidental closure
+            closeButton: false, // Hide the default close button
+            pauseOnHover: false,
+            draggable: false,
+            toastId: `confirm-delete-${id}`, // Unique ID for this toast
+            render: (
+                <div>
+                    <p>Are you sure you want to delete this user?</p>
+                    <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '10px' }}>
+                        <button
+                            style={{
+                                backgroundColor: '#f44336',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '4px',
+                                padding: '5px 10px',
+                                cursor: 'pointer',
+                            }}
+                            onClick={async () => {
+                                try {
+                                    await axios.delete(`/admin/user/${id}`); // API request
+                                    setUsers(users.filter((user) => user._id !== id)); // Update state
+                                    toast.dismiss(`confirm-delete-${id}`); // Close the confirmation toast
+                                    toast.success('User deleted successfully!', {
+                                        position: 'top-center',
+                                        autoClose: 3000,
+                                    });
+                                } catch (error) {
+                                    toast.error(`Error deleting user: ${error.response?.data?.message || error.message}`, {
+                                        position: 'top-center',
+                                    });
+                                }
+                            }}
+                        >
+                            Yes
+                        </button>
+                        <button
+                            style={{
+                                backgroundColor: '#007bff',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '4px',
+                                padding: '5px 10px',
+                                cursor: 'pointer',
+                            }}
+                            onClick={() => toast.dismiss(`confirm-delete-${id}`)}
+                        >
+                            No
+                        </button>
+                    </div>
+                </div>
+            ),
+        });
     };
+    
 
     const handleEditUser = (user) => {
         navigate('/admin/user/edit', { state: { user } }); // Pass user data to the edit page

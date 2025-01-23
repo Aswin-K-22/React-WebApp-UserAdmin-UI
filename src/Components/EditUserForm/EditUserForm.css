@@ -30,6 +30,8 @@
 /* Form group */
 .edit-user-form-group {
     margin-bottom: 20px;
+    margin-right: 10px;
+
 }
 
 /* Labels */
@@ -48,7 +50,6 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 1rem;
-    margin: 0px , -10px;
 }
 
 /* Error messages */
