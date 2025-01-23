@@ -12,6 +12,8 @@ const AdminDashboard = () => {
     const [users, setUsers] = useState([]); // Initialize with an empty array
     const [searchTerm, setSearchTerm] = useState('');
     const [newUser, setNewUser] = useState({ name: '', email: '', password: '' });
+   
+    const [errors, setErrors] = useState({});
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -35,23 +37,41 @@ const AdminDashboard = () => {
         setSearchTerm(e.target.value);
     };
 
+    const validateInputs = () => {
+        const newErrors = {};
+        if (!newUser.name.trim()) newErrors.name = 'Name is required.';
+        if (!newUser.email.trim()) {
+            newErrors.email = 'Email is required.';
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newUser.email)) {
+            newErrors.email = 'Enter a valid email address.';
+        }
+        if (!newUser.password.trim()) {
+            newErrors.password = 'Password is required.';
+        } else if (newUser.password.length < 6) {
+            newErrors.password = 'Password must be at least 6 characters.';
+        }
+        return newErrors;
+    };
+
     const handleAddUserChange = (e) => {
         setNewUser({ ...newUser, [e.target.name]: e.target.value });
+        setErrors((prev) => ({ ...prev, [e.target.name]: '' })); // Clear error for the field
     };
 
     const handleAddUser = async () => {
-        // Frontend Validation
-        if (!newUser.name || !newUser.email || !newUser.password) {
-            toast.error('All fields (Name, Email, and Password) are required!');
+        const validationErrors = validateInputs();
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
             return;
         }
-    
+
         try {
             const response = await axios.post('/admin/addUser', newUser);
-            
-            setUsers([...users, response.data.user]); // Add the new user to the list
-            setNewUser({ name: '', email: '', password: '' }); // Clear input fields
-            setIsModalOpen(false); // Close the modal
+            setUsers([...users, response.data.user]);
+            setNewUser({ name: '', email: '', password: '' });
+            setErrors({});
+            setIsModalOpen(false);
+            toast.success('User added successfully!');
         } catch (error) {
             console.error('Error adding user:', error.response?.data?.message || error.message);
         }
@@ -150,30 +170,52 @@ const AdminDashboard = () => {
             </div>
 
             {isModalOpen && (
-                <div className="modal">
-                    <h2>Add New User</h2>
-                    <input
-                        name="name"
-                        placeholder="Name"
-                        value={newUser.name}
-                        onChange={handleAddUserChange}
-                    />
-                    <input
-                        name="email"
-                        placeholder="Email"
-                        value={newUser.email}
-                        onChange={handleAddUserChange}
-                    />
-                    <input
-                        name="password"
-                        placeholder="Password"
-                        value={newUser.password}
-                        onChange={handleAddUserChange}
-                    />
-                    <button onClick={handleAddUser}>Submit</button>
-                    <button onClick={() => setIsModalOpen(false)}>Cancel</button>
-                </div>
-            )}
+                 <div className="modal">
+                 <h2>Add New User</h2>
+                 <div className="modal-input-container">
+                     <label>Name</label>
+                     <input
+                         name="name"
+                         placeholder="Name"
+                         value={newUser.name}
+                         onChange={handleAddUserChange}
+                         className={errors.name ? 'input-error' : ''}
+                     />
+                     {errors.name && <p className="error-message">{errors.name}</p>}
+                 </div>
+                 <div className="modal-input-container">
+                     <label>Email</label>
+                     <input
+                         name="email"
+                         placeholder="Email"
+                         value={newUser.email}
+                         onChange={handleAddUserChange}
+                         className={errors.email ? 'input-error' : ''}
+                     />
+                     {errors.email && <p className="error-message">{errors.email}</p>}
+                 </div>
+                 <div className="modal-input-container">
+                     <label>Password</label>
+                     <input
+                         name="password"
+                         placeholder="Password"
+                         type="password"
+                         value={newUser.password}
+                         onChange={handleAddUserChange}
+                         className={errors.password ? 'input-error' : ''}
+                     />
+                     {errors.password && <p className="error-message">{errors.password}</p>}
+                 </div>
+                 <div className="modal-actions">
+                     <button onClick={handleAddUser} className="submit-button">
+                         Submit
+                     </button>
+                     <button onClick={() => setIsModalOpen(false)} className="cancel-button">
+                         Cancel
+                     </button>
+                 </div>
+             </div>
+         )}
 
             <table className="user-table">
                 <thead>

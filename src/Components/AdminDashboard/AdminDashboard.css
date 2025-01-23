@@ -2,13 +2,13 @@
 
 .admin-dashboard {
     padding: 20px;
-    background-color: #f4f4f4; /* Light background */
+    background: linear-gradient(105deg, #9184a4, #0c0016); /* Gradient background *//* Light background */
     min-height: 100vh; /* Full height */
 }
 
 .admin-dashboard h1 {
     text-align: center; /* Center the heading */
-    color: #333; /* Darker text color */
+    color: #e0e9e9; /* Darker text color */
     margin-bottom: 20px; /* Space below the heading */
 }
 
@@ -22,7 +22,7 @@
 }
 
 .add-user-button {
-    background-color: #007bff; /* Primary button color */
+    background-color: #5f22a4; /* Primary button color */
     color: white; /* White text color */
     border: none; /* Remove border */
     border-radius: 4px; /* Rounded corners */
@@ -36,7 +36,7 @@
 }
 
 .add-user-button:hover {
-    background-color: #0056b3; /* Darker shade on hover */
+    background-color: #4d3caf; /* Darker shade on hover */
 }
 
 .user-table {
@@ -46,67 +46,89 @@
 }
 
 .user-table th, .user-table td {
-    border: 1px solid #ccc; /* Light border */
+    border: 1px solid #dcc3c3; /* Light border */
     padding: 10px; /* Padding inside cells */
     text-align: left; /* Align text to the left */
 }
 
 .user-table th {
-    background-color: #007bff; /* Header background color */
+    background-color: #322360; /* Header background color */
     color: white; /* Header text color */
 }
 
 .user-table tr:nth-child(even) {
-    background-color: #f9f9f9; /* Zebra striping for rows */
+    background-color: #8a898a; /* Zebra striping for rows */
 }
 
 .user-table tr:hover {
-    background-color: #f1f1f1; /* Highlight row on hover */
+    background-color: #ffffff; /* Highlight row on hover */
 }
 
 .modal {
-    position: fixed; /* Fixed position */
-    top: 0; /* Align to top */
-    left: 0; /* Align to left */
-    right: 0; /* Align to right */
-    bottom: 0; /* Align to bottom */
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    display: flex; /* Flexbox for centering */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    z-index: 1000; /* On top of other elements */
+    background: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    width: 300px;
+    margin: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.modal h2 {
-    margin-bottom: 20px; /* Space below heading */
-    color: #333; /* Darker text color */
+.modal-input-container {
+    margin-bottom: 15px;
 }
 
-.modal input {
-    width: 100%; /* Full width input */
-    padding: 10px; /* Padding inside input */
-    margin: 10px 0; /* Space above and below inputs */
-    border: 1px solid #ccc; /* Light border */
-    border-radius: 4px; /* Rounded corners */
-    font-size: 16px; /* Font size */
+.modal-input-container label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
 }
 
-.modal button {
-    background-color: #007bff; /* Primary button color */
-    color: white; /* White text color */
-    border: none; /* Remove border */
-    border-radius: 4px; /* Rounded corners */
-    padding: 10px 15px; /* Padding inside button */
-    cursor: pointer; /* Pointer cursor on hover */
-    font-size: 16px; /* Font size */
-    margin-right: 10px; /* Space between buttons */
+.modal-input-container input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-.modal button:hover {
-    background-color: #0056b3; /* Darker shade on hover */
+.input-error {
+    border-color: red;
 }
 
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
 
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.submit-button {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.cancel-button {
+    background-color: #dc3545;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.cancel-button:hover,
+.submit-button:hover {
+    opacity: 0.9;
+}
 
 
 /* //////////////////////////////////////////////////////////////////////////////////////////////////////////// */
@@ -133,21 +155,21 @@
 }
 
 .edit-button {
-    background-color: #007bff;
+    background-color: #240d56;
     color: white;
 }
 
 .delete-button {
-    background-color: #f44336;
+    background-color: #bb06069d;
     color: white;
 }
 
 .edit-button:hover {
-    background-color: #0056b3;
+    background-color: #3c2655;
 }
 
 .delete-button:hover {
-    background-color: #d32f2f;
+    background-color: #562626;
 }
 
 /* Responsive Styles */
