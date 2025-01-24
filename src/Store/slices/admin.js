@@ -24,7 +24,7 @@ export const { setAdmin,clearAdmin} = adminSlice.actions
 
 const fetchAdmin = async (dispatch) => {
     try {
-        const response = await axios.get('/user/is-authenticated' ,{withCredentials : true} );
+        const response = await axios.get('/admin/is-authenticated' ,{withCredentials : true} );
         console.log('FetchAdmin Response:', response.data);
         if (response.data.isAuthenticated) {
             dispatch(setAdmin(response.data));
