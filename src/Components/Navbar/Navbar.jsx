@@ -1,8 +1,6 @@
 import './Navbar.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { fetchUser } from '../../Store/slices/authSlice';
 import axios from '../../axios';
 import { clearUser } from '../../Store/slices/authSlice';
 import defaultProfilePic from '../../assets/Default_pfp.jpg'; 
@@ -24,15 +22,18 @@ const Navbar = () => {
 };
 
 
-  useEffect(() => {
-    console.log("Navbar fetching chekcing 'isAuthenticated' =",isAuthenticated)
-      if (!isAuthenticated) {
-          dispatch(fetchUser());
-      }
-  }, [dispatch, isAuthenticated]);
+  console.log(defaultProfilePic); // Should log the URL/path to the image
+  console.log('isUser Authenticated :', isAuthenticated);
+  console.log('User ', user);
+  
 
   const handleProfileClick = () => {
-    navigate('/profile');
+    if(isAuthenticated){
+      navigate('/profile');
+
+    }else{
+      navigate('/login')
+    }
   };
 
   return (
@@ -60,7 +61,7 @@ const Navbar = () => {
 
                   {user?.profilePhoto ? (
                         <img
-                          src={`${import.meta.env.VITE_API_BASE_URL}${user.profilePhoto}`}
+                          src={user.profilePhoto}
                           alt="Profile"
                           className="profile-pic"
                         />

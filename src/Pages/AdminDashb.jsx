@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import AdminNavbar from "../Components/AdminNavbar/AdminNavbar";
 import AdminDashboard from "../Components/AdminDashboard/AdminDashboard";
 import Footer from "../Components/Footer/Footer";
-import { fetchAdmin } from "../Store/middleware/adminFetch";
 import { ToastContainer } from 'react-toastify';
 
 const AdminDashb = () => {
@@ -13,7 +12,7 @@ const AdminDashb = () => {
     const dispatch = useDispatch();
     useEffect(() => {
       if (!isAdminAuthenticated) {
-         dispatch(fetchAdmin())
+        navigate('/admin/login')
       }
       console.log('admin dash page' , isAdminAuthenticated);
       

@@ -3,7 +3,7 @@
   .home-content {
     padding: 2rem;
     text-align: center;
-    min-height:72vh;
+    min-height:100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;

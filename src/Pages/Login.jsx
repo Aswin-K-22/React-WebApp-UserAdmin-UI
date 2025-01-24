@@ -13,16 +13,16 @@ const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-useEffect(()=>{
-    const checkAdminAuthentication = async () => {
-        if (!isAuthenticated) {
-         dispatch(fetchUser)
-        } else {
-            navigate('/admin/dashboard');
+useEffect(() => {
+        if (isAuthenticated) {
+            
+            navigate('/');
+        }else{
+             dispatch(fetchUser())
         }
-    };
-    checkAdminAuthentication();
-},[isAuthenticated])
+        console.log('USER -Login  page -useEffect',isAuthenticated);
+
+    }, [isAuthenticated, navigate,dispatch]); 
 
   return (
     <div>

@@ -1,230 +1,127 @@
-import { useEffect, useState } from 'react';
-import ReactCrop from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
-import {  FaEdit } from 'react-icons/fa';
-import axios from '../../axios';
-import './ProfilePage.css';
-import { useDispatch, useSelector } from 'react-redux';
-import defaultProfilePic from '../../assets/Default_pfp.jpg';
-import { updateUserProfileImage } from '../../Store/slices/authSlice';
-import { useNavigate } from 'react-router-dom';
-
-
-
-
+import { useState, useEffect } from "react";
+import axios from "../../axios";
+import "./ProfilePage.css";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUserProfileImage } from "../../Store/slices/authSlice";
+import { toast } from "react-toastify";
 
 const ProfilePage = () => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [croppedImage, setCroppedImage] = useState(null);
-  const navigate = useNavigate();
-  const [crop, setCrop] = useState({
-    unit: '%', // Defaults to percentages
-    x: 0,
-    y: 0,
-    width: 50,
-    height: 50,
-    aspect: 1,
-  });
-  
-  const [deleteImage, setDeleteImage] = useState(false);
 
+  const [image, setImage] = useState(null);
+  const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
+  // Cleanup memory leak from URL.createObjectURL
   useEffect(() => {
-    if (user === null) {
-      navigate('/login');
-    }
-  }, [user , navigate]);
-  
+    return () => {
+      if (image) URL.revokeObjectURL(image.preview);
+    };
+  }, [image]);
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
-        alert('Invalid file type. Please upload a JPEG, PNG, or WEBP image.');
-        return;
-      }
-      if (file.size > 5 * 1024 * 1024) { // Limit to 5MB
-        alert('File size exceeds 5MB. Please upload a smaller image.');
-        return;
-      }
-      setSelectedImage(URL.createObjectURL(file));
-      setCroppedImage(null);
+  const validateFields = () => {
+    const validationErrors = {};
+    if (!image) {
+      validationErrors.image = "Please select an image.";
+    } else if (image.size > 5 * 1024 * 1024) {
+      validationErrors.image = "Image size should be less than 5MB.";
     }
+    setErrors(validationErrors);
+    return Object.keys(validationErrors).length === 0;
   };
-  
 
-  const handleCropComplete = (crop) => {
-    if (
-      !crop ||
-      typeof crop.x === 'undefined' ||
-      typeof crop.y === 'undefined' ||
-      typeof crop.width === 'undefined' ||
-      typeof crop.height === 'undefined'
-    ) {
-      console.error('Invalid crop data:', crop);
-      return;
-    }
-
-    console.log('Crop object:', crop);
-
-  
-    if (selectedImage) {
-      const image = new Image();
-      image.src = selectedImage;
-  
-      image.onload = () => {
-        const canvas = document.createElement('canvas');
-        const scaleX = image.naturalWidth / image.width;
-        const scaleY = image.naturalHeight / image.height;
-  
-        canvas.width = crop.width;
-        canvas.height = crop.height;
-  
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(
-          image,
-          crop.x * scaleX,
-          crop.y * scaleY,
-          crop.width * scaleX,
-          crop.height * scaleY,
-          0,
-          0,
-          crop.width,
-          crop.height
-        );
-  
-        const croppedDataUrl = canvas.toDataURL('image/jpeg');
-        setCroppedImage(croppedDataUrl);
-      };
-    }
-  };
-  
-
-
-
-  // const handleResetProfilePic = () => {
-  //   setCroppedImage(null);
-  //   setSelectedImage(null);
-  // };
-
-
-
-  const handleSaveProfilePic = async () => {
-      if (!croppedImage && !selectedImage && !deleteImage) return;
-  console.log('"""""""""""""""-croperd  Image""""""""""-----',croppedImage)
-  console.log('"""""""""""""""-selectedImage""""""""""-----',selectedImage)
-      try {
-        const payload = {
-          image: croppedImage || selectedImage  ,
-      };
-      console.log('Sending payload:', payload);
-      const response = await axios.post('/user/profile-pic', payload, {
-        headers: { 'Content-Type': 'application/json' },
+  const uploadImageToCloudinary = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+ formData.append("upload_preset", "profile-uploads")
+    formData.append("folder",  "user-profiles");
+    const response = await fetch("https://api.cloudinary.com/v1_1/dckmi7m7y/image/upload", {
+      method: "POST",
+      body: formData,
     });
 
-    console.log('Profile picture updated:', response.data);
-    dispatch(updateUserProfileImage(response.data.profilePhoto));
+    if (!response.ok) {
+      throw new Error("Image upload failed");
+    }
 
-  
-          
-          alert('Profile picture updated successfully!');
-          setDeleteImage(false);
-          setSelectedImage(null);
-          setCroppedImage(null);
-      } catch (error) {
-          console.error('Error saving profile picture:', error);
-      }
+    const data = await response.json();
+    return data.secure_url;
   };
-  
-  // const handleDeleteProfilePic = async () => {
-  //     try {
-  //         if (!window.confirm('Are you sure you want to delete your profile picture?')) return;
-  
-  //         setDeleteImage(true);
-  
-  //         const response = await axios.delete('/user/profile-pic', {
-  //             data: { delete: true },
-  //         });
-  
-  //         console.log('Profile picture deleted:', response.data);
-  
-  //         dispatch(updateUserProfileImage(null));
-          
-  //         alert('Profile picture deleted successfully!');
-  //         setDeleteImage(false);
-  //         setSelectedImage(null);
-  //         setCroppedImage(null);
-  //     } catch (error) {
-  //         console.error('Error deleting profile picture:', error);
-  //         alert('Failed to delete profile picture.');
-  //     }
-  // };
 
-  console.log('Redux state - user:', user);
+  const createProduct = async (userId, imageUrl) => {
+    console.log('userId =' ,userId)
+    console.log('imageUrel',imageUrl)
+    const response = await axios.post("/user/profile-pic", { userId, imageUrl });
+    return response.data;
+  };
 
+  const handleSubmit = async () => {
+    if (!validateFields()) return;
+
+    try {
+      setIsLoading(true);
+
+      const imageUrl = await uploadImageToCloudinary(image);
+      const response = await createProduct(user._id, imageUrl);
+
+      dispatch(updateUserProfileImage(response.profilePhoto));
+      toast.success("Profile picture updated successfully!");
+      navigator('/')
+    } catch (error) {
+      toast.error(`Failed to update profile picture: ${error.message}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleImageChange = (e) => {
+    const selectedFile = e.target.files[0];
   
-
+    if (selectedFile) {
+      if (!selectedFile.type.startsWith("image/")) {
+        toast.error("Only image files are allowed");
+        return;
+      }
+      if (selectedFile.size > 5 * 1024 * 1024) { // Max 5MB
+        toast.error("File size must be less than 5MB");
+        return;
+      }
+      setImage(selectedFile);
+    }
+  };
   
 
   return (
-<div className="profile-page">
-  <h1>Profile Page</h1>
-  <div className="profile-pic-container">
-    {user?.profilePhoto ? (
-      <img
-        src={croppedImage || `${import.meta.env.VITE_API_BASE_URL}${user.profilePhoto}` || defaultProfilePic}
-        alt="Profile"
-        className="profile-pic canvas-placeholder"
-      />
-    ) : (
-      <img
-        src={croppedImage || defaultProfilePic}
-        alt="Profile"
-        className="profile-pic"
-      />
-    )}
-    <div className="profile-pic-buttons">
-      <label htmlFor="upload-input" className="upload-button">
-        <FaEdit /> Upload Image
-        <input
-          id="upload-input"
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-          hidden
-        />
-      </label>
-      {/* <button className="delete-button" onClick={handleDeleteProfilePic}>
-        <FaTrash /> Delete Image
-      </button> */}
-      {/* {selectedImage && (
-        <button className="reset-button" onClick={handleResetProfilePic}>
-          <FaUndo /> Reset
-        </button>
-      )} */}
-    </div>
-  </div>
-  {selectedImage && (
-    <>
-    <div className="react-crop-container">
-      <ReactCrop
-        crop={crop}
-        onChange={(newCrop) => setCrop(newCrop)}
-        onComplete={handleCropComplete}
-        aspect={1}
-      >
-        <img src={selectedImage} alt="Selected" />
-      </ReactCrop>
-      </div>
-      <button className="save-button" onClick={handleSaveProfilePic}>
-        Save Profile Picture
-      </button>
-    </>
-  )}
-</div>
+    <div className="profile-page">
+      <h3 className="profile-title">Upload Profile Picture</h3>
 
+      <label htmlFor="profile-image" className="profile-label">Image</label>
+      <input
+        className={`profile-input ${errors.image ? "profile-input-error" : ""}`}
+        type="file"
+        id="profile-image"
+        accept="image/*"
+        onChange={handleImageChange}
+      />
+      {errors.image && <div className="profile-error-message">{errors.image}</div>}
+
+      {image?.preview ? (
+        <div className="profile-image-preview">
+          <img src={image.preview} alt="Selected" className="profile-preview-image" />
+        </div>
+      ) : (
+        <div className="profile-thumbnail-placeholder">No image selected</div>
+      )}
+
+      <button
+        onClick={handleSubmit}
+        className="profile-upload-btn"
+        disabled={isLoading}
+      >
+        {isLoading ? "Uploading..." : "Upload and Submit"}
+      </button>
+    </div>
   );
 };
 
