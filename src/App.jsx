@@ -21,16 +21,16 @@ function App() {
 
     useEffect(()=>{
           if (!isAuthenticated) {
-            console.log('going to fetch user');
+            console.log('going to fetch user',isAuthenticated);
             
         dispatch(fetchUser)
           }
           if(!isAdminAuthenticated){
-            console.log('going to fetch admin');
+            console.log('going to fetch admin',isAdminAuthenticated);
             
             dispatch(fetchAdmin)
           }
-  },[])
+  },[isAdminAuthenticated,isAuthenticated,dispatch])
 
   return (
     <>

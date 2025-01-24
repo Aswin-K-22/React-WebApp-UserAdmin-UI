@@ -1,67 +1,66 @@
-/* AdminDashboard.css */
 
 .admin-dashboard {
     padding: 20px;
-    background: linear-gradient(105deg, #9184a4, #0c0016); /* Gradient background *//* Light background */
-    min-height: 70vh; /* Full height */
+    background: linear-gradient(105deg, #9184a4, #0c0016); 
+    min-height: 70vh; 
 }
 
 .admin-dashboard h1 {
-    text-align: center; /* Center the heading */
-    color: #e0e9e9; /* Darker text color */
-    margin-bottom: 20px; /* Space below the heading */
+    text-align: center; 
+    color: #e0e9e9; 
+    margin-bottom: 20px; 
 }
 
 .search-input {
-    width: 100%; /* Full width input */
-    padding: 10px; /* Padding inside input */
-    margin-bottom: 20px; /* Space below input */
-    border: 1px solid #ccc; /* Light border */
-    border-radius: 4px; /* Rounded corners */
-    font-size: 16px; /* Font size */
+    width: 100%; 
+    padding: 10px; 
+    margin-bottom: 20px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    font-size: 16px; 
 }
 
 .add-user-button {
-    background-color: #5f22a4; /* Primary button color */
-    color: white; /* White text color */
-    border: none; /* Remove border */
-    border-radius: 4px; /* Rounded corners */
-    padding: 10px 15px; /* Padding inside button */
-    cursor: pointer; /* Pointer cursor on hover */
-    font-size: 16px; /* Font size */
-    margin-bottom: 20px; /* Space below button */
-    display: block; /* Block display for full width */
-    width: 100%; /* Full width button */
-    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    background-color: #5f22a4; 
+    color: white; 
+    border: none; 
+    border-radius: 4px; 
+    padding: 10px 15px; 
+    cursor: pointer; 
+    font-size: 16px;
+    margin-bottom: 20px; 
+    display: block; 
+    width: 100%;
+    transition: background-color 0.3s; 
 }
 
 .add-user-button:hover {
-    background-color: #4d3caf; /* Darker shade on hover */
+    background-color: #4d3caf; 
 }
 
 .user-table {
-    width: 100%; /* Full width table */
-    border-collapse: collapse; /* Collapse borders */
-    margin-top: 20px; /* Space above the table */
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px; 
 }
 
 .user-table th, .user-table td {
-    border: 1px solid #dcc3c3; /* Light border */
-    padding: 10px; /* Padding inside cells */
-    text-align: left; /* Align text to the left */
+    border: 1px solid #dcc3c3;
+    padding: 10px; 
+    text-align: left; 
 }
 
 .user-table th {
-    background-color: #322360; /* Header background color */
-    color: white; /* Header text color */
+    background-color: #322360; 
+    color: white; 
 }
 
 .user-table tr:nth-child(even) {
-    background-color: #8a898a; /* Zebra striping for rows */
+    background-color: #8a898a; 
 }
 
 .user-table tr:hover {
-    background-color: #ffffff; /* Highlight row on hover */
+    background-color: #ffffff;
 }
 
 .modal {
@@ -131,21 +130,17 @@
 }
 
 
-/* //////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
 
 
-/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
 
-/* Style the container holding the buttons */
 .button-container {
-    display: flex; /* Use flexbox to align buttons horizontally */
-    gap: 10px; /* Adds space between the buttons */
-    justify-content: flex-start; /* Align buttons to the left */
+    display: flex; 
+    gap: 10px; 
+    justify-content: flex-start;
 }
 
-/* Individual button styling remains the same */
 .edit-button,
 .delete-button {
     padding: 5px 10px;
@@ -172,39 +167,38 @@
     background-color: #562626;
 }
 
-/* Responsive Styles */
 @media (max-width: 768px) {
     .search-input, .add-user-button {
-        font-size: 14px; /* Smaller font size on mobile */
+        font-size: 14px; 
     }
 
     .user-table th, .user-table td {
-        font-size: 14px; /* Smaller font size for table */
+        font-size: 14px; 
     }
 
     .modal input, .modal button {
-        font-size: 14px; /* Smaller font size for modal */
+        font-size: 14px;
     }
 }
 
 @media (max-width: 480px) {
     .admin-dashboard {
-        padding: 10px; /* Reduced padding on mobile */
+        padding: 10px;
     }
 
     .search-input, .add-user-button {
-        padding: 8px; /* Reduced padding for inputs and buttons */
+        padding: 8px; 
     }
 
     .user-table th, .user-table td {
-        padding: 8px; /* Reduced padding for table cells */
+        padding: 8px; 
     }
 
     .modal h2 {
-        font-size: 18px; /* Smaller heading size in modal */
+        font-size: 18px; 
     }
 
     .modal input, .modal button {
-        padding: 8px; /* Reduced padding for modal inputs and buttons */
+        padding: 8px; 
     }
 }

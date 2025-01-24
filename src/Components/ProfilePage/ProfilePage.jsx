@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateUserProfileImage } from "../../Store/slices/authSlice";
 import { toast } from "react-toastify";
 import defaultProfilePic from '../../assets/Default_pfp.jpg'; 
+import { useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-
+const navigate = useNavigate();
   const [image, setImage] = useState({ file: '', preview: user?.profilePhoto || defaultProfilePic });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -68,7 +69,7 @@ const ProfilePage = () => {
 
       dispatch(updateUserProfileImage(response.profilePhoto));
       toast.success("Profile picture updated successfully!");
-      navigator('/')
+      navigate('/')
     } catch (error) {
       toast.error(`Failed to update profile picture: ${error.message}`);
     } finally {

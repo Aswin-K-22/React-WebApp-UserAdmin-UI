@@ -1,9 +1,11 @@
 .signup-page {
     width: 100%;
-    min-height: 72vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    background: linear-gradient(135deg, #726d78, #2f0a1f); /* Gradient background */
+
     padding: 20px;
 }
 
@@ -38,7 +40,7 @@
     width: 100%;
     padding: 10px;
     margin-top: 10px;
-    background-color: #28a745;
+    background-color: #200e57;
     color: white;
     border: none;
     border-radius: 4px;
