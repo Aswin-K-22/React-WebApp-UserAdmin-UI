@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from '../../axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setUser } from '../../Store/slices/authSlice';
+import { setUser, updateUserProfileImage } from '../../Store/slices/authSlice';
 import './LoginForm.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -55,6 +55,11 @@ const LoginForm = () => {
         name: response.data.name,
         token: response.data.token,
       }));
+
+      const profilePhoto = response.data.profilePhoto;
+      if(profilePhoto !== "Profile Pic"){
+        dispatch(updateUserProfileImage(profilePhoto));
+      }
       toast.success('Login successful');
      
       navigate('/');

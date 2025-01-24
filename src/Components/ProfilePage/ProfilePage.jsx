@@ -9,7 +9,7 @@ const ProfilePage = () => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState({ file: '', preview: user.profilePhoto });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
@@ -22,9 +22,9 @@ const ProfilePage = () => {
 
   const validateFields = () => {
     const validationErrors = {};
-    if (!image) {
+    if (!image.file) {
       validationErrors.image = "Please select an image.";
-    } else if (image.size > 5 * 1024 * 1024) {
+    } else if (image.file.size > 5 * 1024 * 1024) {
       validationErrors.image = "Image size should be less than 5MB.";
     }
     setErrors(validationErrors);
@@ -34,9 +34,9 @@ const ProfilePage = () => {
   const uploadImageToCloudinary = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
- formData.append("upload_preset", "profile-uploads")
-    formData.append("folder",  "user-profiles");
-    const response = await fetch("https://api.cloudinary.com/v1_1/dckmi7m7y/image/upload", {
+ formData.append("upload_preset", import.meta.env.VITE_APP_CLOUDINARY_PRESET)
+    formData.append("folder",  import.meta.env.VITE_APP_CLOUDINARY_FOLDER);
+    const response = await fetch(import.meta.env.VITE_APP_CLOUDINARY_URL, {
       method: "POST",
       body: formData,
     });
@@ -62,7 +62,7 @@ const ProfilePage = () => {
     try {
       setIsLoading(true);
 
-      const imageUrl = await uploadImageToCloudinary(image);
+      const imageUrl = await uploadImageToCloudinary(image.file);
       const response = await createProduct(user._id, imageUrl);
 
       dispatch(updateUserProfileImage(response.profilePhoto));
@@ -87,12 +87,14 @@ const ProfilePage = () => {
         toast.error("File size must be less than 5MB");
         return;
       }
-      setImage(selectedFile);
+      
+      setImage( { file: selectedFile, preview: URL.createObjectURL(selectedFile) });
     }
   };
   
 
   return (
+    <div className="profile-page-container">
     <div className="profile-page">
       <h3 className="profile-title">Upload Profile Picture</h3>
 
@@ -121,6 +123,7 @@ const ProfilePage = () => {
       >
         {isLoading ? "Uploading..." : "Upload and Submit"}
       </button>
+    </div>
     </div>
   );
 };
