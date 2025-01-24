@@ -27,11 +27,18 @@ const authSlice = createSlice({
 export const { setUser, clearUser,updateUserProfileImage } = authSlice.actions;
 
 export const fetchUser = () => async (dispatch) => {
+    console.log('User fetching widdleware');
+    
     try {
         const response = await axios.get('/user/is-authenticated', { withCredentials: true });
         console.log('FetchUser Response:', response.data);
         if (response.data.isAuthenticated) {
             dispatch(setUser(response.data));
+            
+      const profilePhoto = response.data.profilePhoto;
+      if(profilePhoto !== "Profile Pic"){
+        dispatch(updateUserProfileImage(profilePhoto));
+      }
         } else {
             dispatch(clearUser());
         }

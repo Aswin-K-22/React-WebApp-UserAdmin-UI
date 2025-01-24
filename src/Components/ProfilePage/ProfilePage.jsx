@@ -4,12 +4,13 @@ import "./ProfilePage.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserProfileImage } from "../../Store/slices/authSlice";
 import { toast } from "react-toastify";
+import defaultProfilePic from '../../assets/Default_pfp.jpg'; 
 
 const ProfilePage = () => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  const [image, setImage] = useState({ file: '', preview: user.profilePhoto });
+  const [image, setImage] = useState({ file: '', preview: user?.profilePhoto || defaultProfilePic });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 

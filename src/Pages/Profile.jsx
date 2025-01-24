@@ -9,14 +9,18 @@ const Profile = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+ 
+
   useEffect(()=>{
-      const checkAdminAuthentication = async () => {
+    console.log('-----------------------------------------------------------------------------------------------')
+ console.log('---------------------------------Profile page UseEffect--------------------------------------------------------------');
+ 
+ 
           if (!isAuthenticated) {
         
-          navigate('/');
+          navigate('/login');
           }
-      };
-      checkAdminAuthentication();
+    
   },[isAuthenticated,dispatch,navigate])
   return (
     <div>

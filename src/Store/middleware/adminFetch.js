@@ -4,6 +4,8 @@ import axios from '../../axios';
 export const fetchAdmin = createAsyncThunk(
     'adminAuth/fetchAdmin', 
     async (_, { rejectWithValue }) => {
+        console.log('Admin fetching middleware');
+        
         try {
             const response = await axios.get('/admin/is-authenticated', { withCredentials: true });
             console.log('[fetchAdmin]: Success:', response.data);

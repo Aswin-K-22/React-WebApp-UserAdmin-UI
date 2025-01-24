@@ -23,6 +23,10 @@ const Navbar = () => {
 
 
   console.log(defaultProfilePic); // Should log the URL/path to the image
+  console.log('----------------------------------------NAVBAR -Component----------------------------------------------------------');
+  console.log('--------------------------------------------------------------------------------------------------'); 
+  console.log('--------------------------------------------------------------------------------------------------'); 
+
   console.log('isUser Authenticated :', isAuthenticated);
   console.log('User ', user);
   

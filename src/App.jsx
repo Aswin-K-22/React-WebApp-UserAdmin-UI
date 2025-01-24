@@ -1,6 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAdmin } from './Store/middleware/adminFetch';
+import { fetchUser } from './Store/slices/authSlice';
 
 // Lazy load all components
 const HomePage = lazy(() => import('./Pages/Home'));
@@ -12,6 +15,23 @@ const Login = lazy(() => import('./Pages/Login'));
 const SignUp = lazy(() => import('./Pages/SignUp'));
 
 function App() {
+  const dispatch = useDispatch();
+  const {isAuthenticated } = useSelector((state)=>state.auth);
+  const { isAdminAuthenticated } = useSelector((state)=>state.admin);
+
+    useEffect(()=>{
+          if (!isAuthenticated) {
+            console.log('going to fetch user');
+            
+        dispatch(fetchUser)
+          }
+          if(!isAdminAuthenticated){
+            console.log('going to fetch admin');
+            
+            dispatch(fetchAdmin)
+          }
+  },[])
+
   return (
     <>
       {/* Add a fallback UI while components are being loaded */}
