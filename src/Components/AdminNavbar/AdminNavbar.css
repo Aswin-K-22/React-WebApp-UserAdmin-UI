@@ -1,0 +1,130 @@
+/* General Styling for Admin Navbar */
+.admin-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px; /* Fixed height */
+    background-color: #1a0035;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    z-index: 1000; /* Always stays on top */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  /* Navbar Logo */
+  .navbar-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-decoration: none;
+  }
+  
+  .navbar-logo:hover {
+    color: #766944;
+  }
+  
+  /* Navbar Links */
+  .navbar-links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar-links li {
+    margin: 0 10px;
+  }
+  
+  .navbar-links a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar-links a:hover {
+    color: #9b9173;
+  }
+  
+  /* Logout Button */
+  .navbar-links button {
+    background-color: #8e06cd;
+    color: #ffffff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .navbar-links button:hover {
+    background-color: #4b0008;
+  }
+  
+  /* Profile Icon */
+  .profile-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+  }
+  
+  .profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ffffff;
+  }
+  
+  /* Welcome Text */
+  .navbar-links span {
+    font-size: 1rem;
+    margin-right: 10px;
+    color: #84ffb7;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .navbar-container {
+      padding: 0 10px;
+    }
+  
+    .navbar-links {
+      flex-direction: column;
+      align-items: flex-end;
+    }
+  
+    .navbar-links li {
+      margin: 5px 0;
+    }
+  
+    .navbar-logo {
+      font-size: 1.2rem;
+    }
+  
+    .profile-pic {
+      width: 35px;
+      height: 35px;
+    }
+  }
+  
+  /* Ensure navbar doesn't overlap page content */
+  body {
+    margin-top: 60px; /* Matches the navbar height */
+  }
+  

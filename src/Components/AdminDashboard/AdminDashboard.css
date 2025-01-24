@@ -3,7 +3,7 @@
 .admin-dashboard {
     padding: 20px;
     background: linear-gradient(105deg, #9184a4, #0c0016); /* Gradient background *//* Light background */
-    min-height: 100vh; /* Full height */
+    min-height: 70vh; /* Full height */
 }
 
 .admin-dashboard h1 {

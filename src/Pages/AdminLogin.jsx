@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { fetchAdmin } from "../Store/slices/admin";
 import { useDispatch, useSelector } from "react-redux";
 import AdminLoginForm from "../Components/AdminLoginForm/AdminLoginForm";
+import AdminNavbar from "../Components/AdminNavbar/AdminNavbar";
+import Footer from "../Components/Footer/Footer";
 
 const AdminLogin = () => {
     const { isAdminAuthenticated } = useSelector((state) => state.admin);
@@ -23,7 +25,10 @@ const AdminLogin = () => {
 
     return (
         <div>
+            
+            <AdminNavbar />
             <AdminLoginForm />
+            <Footer />
         </div>
     );
 };

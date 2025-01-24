@@ -6,9 +6,9 @@ import './App.css';
 import { lazy, Suspense } from 'react';
 import HomePage from './Pages/Home';
 import Profile from './Pages/Profile';
-import AdminLoginForm from './Components/AdminLoginForm/AdminLoginForm';
-import AdminDashboard from './Components/AdminDashboard/AdminDashboard';
-import EditUserForm from './Components/EditUserForm/EditUserForm';
+import AdminLogin from './Pages/AdminLogin';
+import AdminDashb from './Pages/AdminDashb';
+import EditUserFromAdmin from './Pages/EditUserFromAdmin';
 
 const Login = lazy(() => import('./Pages/Login'));
 const SignUp = lazy(() => import('./Pages/SignUp'));
@@ -26,9 +26,9 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/' element={<HomePage/>}/>
             <Route path='/profile' element={<Profile/>}/>
-            <Route path="/admin/login" element={<AdminLoginForm />} />
-            <Route path="/admin/dashboard" element={<AdminDashboard />} />
-            <Route path="/admin/user/edit" element={<EditUserForm />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/dashboard" element={<AdminDashb/>} />
+            <Route path="/admin/user/edit" element={<EditUserFromAdmin/>} />
           </Routes>
         </Router>
       </Suspense>
