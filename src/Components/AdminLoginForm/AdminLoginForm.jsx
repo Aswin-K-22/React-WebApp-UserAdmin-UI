@@ -3,7 +3,7 @@ import axios from '../../axios';
 import { useNavigate } from 'react-router-dom';
 import './AdminLoginForm.css';
 import { useDispatch } from 'react-redux';
-import { setAdmin } from '../../Store/slices/admin';
+import { setAdmin } from '../../Store/slices/adminSlice';
 
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

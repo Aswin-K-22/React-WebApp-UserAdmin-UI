@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from '../../axios';
-import { clearAdmin } from '../../Store/slices/admin';
+import { clearAdmin } from '../../Store/slices/adminSlice';
 import defaultProfilePic from '../../assets/Default_pfp.jpg';
 import './AdminNavbar.css';
 
@@ -10,7 +10,7 @@ const AdminNavbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isAdminAuthenticated , admin  } = useSelector((state) => state.admin);
-
+  console.log('admin Navbar  component - rendering');
 
   const handleLogout = async () => {
     try {

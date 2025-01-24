@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from '../axios';
 
 import Footer from "../Components/Footer/Footer"
 import LoginForm from "../Components/LoginForm/LoginForm"
